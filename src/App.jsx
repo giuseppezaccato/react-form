@@ -13,8 +13,12 @@ function App() {
   //task newArticle hook
   const [newArticle, setNewArticle] = useState('');
 
+  //? funzione di gestione di onChange
+  const handleArticle = (e) => {
+    setNewArticle(e.target.value)
+  }
 
-  //task funzione add
+  //? funzione add che gestisce l'onSubmit del form
   const addArticle = (e) => {
     //* blocco preventivo refresh pagina
     e.preventDefault();
@@ -22,20 +26,22 @@ function App() {
     //* rest operator + newArticle passati nella funzione per modificare lo stato iniziale di newArticle
     setArticles([...articles, newArticle.trim()]);
 
-    //task svuoto il campo di value che passo come 
-    //task attribute onChange al'input in forndo al form (dopo aver dato enter o cliccato su button)
+    //task svuoto il campo di input che passo come 
     setNewArticle('')
   }
 
-  //task funzione delete
+  //? funzione delete onClick inline al button in ogni <li>
   const delArticle = (e) => {
     const newArray = articles.filter((_, index) => index !== e);
     return setArticles(newArray)
 
+    //* abbreviando solo con arrow function ==> passo il filter direttamente come argomento alla funzione che modifica articles, cioè setArticles!!
+    // setArticles( (num) => articles.filter ((element,index) => index !== num )
+
   }
 
   return (
-    <div className="container my-5 col-6  card mx-auto">
+    <div className="container my-5 col-6 card mx-auto">
 
       {/* //task ul di articoli mappati, con key= index del map stesso  */}
       <ul className="list-group list-group-flush " >
@@ -45,8 +51,8 @@ function App() {
       </ul>
 
 
-      <form className="row-cols-6 input-group my-4" onSubmit={addArticle}>
-        <input type="text" className="form-control" placeholder="Aggiungi Articolo" aria-label="cnuovoArticolo" aria-describedby="nuovoArticolo" value={newArticle} onChange={(e) => setNewArticle(e.target.value)} ></input>
+      <form className="row-cols-5 input-group my-4" onSubmit={addArticle}>
+        <input type="text" className="form-control" placeholder="Aggiungi Articolo" aria-label="cnuovoArticolo" aria-describedby="nuovoArticolo" value={newArticle} onChange={handleArticle} ></input>
         <button className=" btn btn-outline-secondary" id="nuovoArticolo"> + </button>
       </form>
 
